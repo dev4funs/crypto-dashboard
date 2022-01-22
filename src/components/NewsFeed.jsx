@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../Api";
 import axios from "axios";
 
 const NewsFeed = () => {
   const [articles, setArticles] = useState([]);
+
   useEffect(() => {
     const options = {
       method: "GET",
-      url: "https://crypto-news-live3.p.rapidapi.com/news",
+      url: `${BASE_URL}/news`,
       headers: {
-        "x-rapidapi-host": "crypto-news-live3.p.rapidapi.com",
-        "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept",
       },
     };
 
@@ -23,6 +26,7 @@ const NewsFeed = () => {
         console.error(error);
       });
   }, []);
+
   const first7articles = articles.slice(0, 7);
   return (
     <div className="news-feed">

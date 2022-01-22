@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import ExchangeRate from "./ExchangeRate";
+import { BASE_URL } from "../Api";
 
 const currencies = ["BTC", "ETH", "USD", "XRP", "LTC", "ADA"];
 const CurrencyConverter = () => {
@@ -14,22 +15,19 @@ const CurrencyConverter = () => {
     exchangeRate: 0,
   });
   const convert = () => {
-    // should say flex not dlex, comment this out for now
     var options = {
       method: "GET",
-      url: "https://alpha-vantage.p.rapidapi.com/query",
+      url: `${BASE_URL}/getCurrencyExchangeRate`,
       params: {
         from_currency: chosenPrimaryCurrency,
-        function: "CURRENCY_EXCHANGE_RATE",
         to_currency: chosenSecondaryCurrency,
       },
       headers: {
-        "x-rapidapi-host": "alpha-vantage.p.rapidapi.com",
-        "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept",
       },
     };
-
-    console.log(options);
 
     axios
       .request(options)
@@ -57,10 +55,9 @@ const CurrencyConverter = () => {
       });
   };
 
-  console.log(chosenPrimaryCurrency, chosenSecondaryCurrency, amount);
   return (
     <div className="currency-converter">
-      <h2>CurrencyConveter</h2>
+      <h2>CurrencyConverter</h2>
       <div className="input-box">
         <table>
           <tbody>
